@@ -130,10 +130,14 @@ db.usuarios.countDocuments({ favoritos: ObjectId("670000000000000000000008") })
 
 
 //-- APARTADO 9: diferencias con mi diseño
+Diferencias:
+- En el iPhone guardé el almacenamiento y la batería como texto ("128GB", "87%"). El modelo usa
+  números (almacenamientoGB: 128, bateriaPct: 87), que es mejor porque así se puede buscar con
+  mayor que / menor que.
+En la mesa puse las medidas juntas (dimensiones: "89 x 320 cm"). El modelo las separa en ancho,
+  fondo y alto, así se puede filtrar por cada medida.
 
-
-
-
+Me gusta mas el modelo del profe, ya que el mio tiene ciertos parametros que cuando vas a comparar no van a dejar.Además de añladir mas informacion por ejemplo a la mesa donde especifica bien las dimensiones ancho, fondo y alto.
 //-- EJERCICIO B2.3
 
 
