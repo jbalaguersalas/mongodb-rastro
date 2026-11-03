@@ -62,3 +62,18 @@ anuncio: {
 
 
 4. 
+No cambiaría el precio guardado en la oferta. Mantendría los 380 € porque es el precio que tenía el anuncio cuando Sara realizó su oferta. Si Ana baja después el precio a 350 €, la oferta debe conservar el precio original para mantener el historial.
+
+//-- EJERCICIO A4
+
+1. 
+
+
+2. 
+
+
+3. 
+
+
+
+4. 
