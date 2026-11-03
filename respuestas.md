@@ -75,5 +75,120 @@ No cambiaría el precio guardado en la oferta. Mantendría los 380 € porque es
 3. 
 
 
+4. 
+
+
+//-- EJERCICIO A5
+
+1. 
+
+
+2. 
+
+
+3. 
+
 
 4. 
+
+
+5. 
+
+
+//-- EJERCICIO A6
+
+1. Mensajes de chat:
+
+2. Dirección de envío de una compra:
+
+3. Etiquetas de un anuncio:
+
+4. Categorías (nombre, icono, atributos obligatorios):
+
+5. Historial de cambios de precio:
+
+6. Los anuncios de un usuario, dentro del usuario:
+
+7. Furniro, líneas de un pedido:
+
+8. Furniro, reseñas de un producto:
+
+
+//-- APARTADO 9: diferencias con mi diseño
+
+
+
+
+//-- EJERCICIO B2.3
+
+
+
+
+//-- EJERCICIO B4
+
+B4.1 Usuario con el email de Ana
+- Predicción:
+- Resultado:
+- Explicación:
+
+B4.2 Hugo valora otra vez a Marta por el mismo anuncio
+- Predicción:
+- Resultado:
+- Explicación:
+
+B4.3 Anuncio de un vendedor que no existe
+- Predicción:
+- Resultado:
+- Explicación:
+
+B4.4 Precio escrito como texto
+- Predicción:
+- Resultado:
+- Explicación:
+
+B4.5 Cambiar el precio del Xiaomi sin operador
+- Predicción:
+- Resultado:
+- Explicación:
+
+B4.6 Buscar el iPhone por su id como texto
+- Predicción:
+- Resultado:
+- Explicación:
+
+B4.7 
+
+
+B4.8 
+
+
+B4.9 
+
+
+//-- EJERCICIO B5.12
+
+
+
+
+//-- EJERCICIO B7 (preguntas)
+
+B7.3 (¿Se ha duplicado el Ford Focus?):
+
+B7.4 (¿Cuántas instrucciones? ¿Y si se corta la luz?):
+
+B7.6 (¿Qué nombre aparece en sus anuncios? ¿Dónde hay que arreglarlo?):
+
+
+//-- EJERCICIO B8
+
+1. 
+
+2. 
+
+3. 
+
+4. 
+
+5. 
+
+6. 
