@@ -94,38 +94,39 @@ Crearía un índice único sobre autor.id y anuncioId, para evitar que un mismo 
 
 //-- EJERCICIO A5
 
-1. 
+1. Un usuario normal podrá tener decenas, como mucho algún centenar, pero un anuncio popular lo tendran en favoritos miles de usuarios.
 
 
-2. 
+2. Se descarta la opción b, porque ese array crece sin limite en un anuncio popular, y ocuparia más de la cuenta.
 
 
-3. 
+3. La lista de favoritos del usuario, no hace falta consultar ningun sitio más.
 
 
-4. 
+4. Buscamos en la colección usuarios los que tienen ese anuncio en su lista de favoritos, y los contamos:
+db.usuarios.countDocuments({ favoritos: ObjectId("670000000000000000000008") })
 
 
-5. 
+5. $addToSet, porque solo añade el anuncio si no está ya en la lista. Con $push se repetiría si el usuario pulsa dos veces.
 
 
 //-- EJERCICIO A6
 
-1. Mensajes de chat:
+1. Mensajes de chat: Referenciar (ej:mensajes).Pueden ser muchisimos y no paran.
 
-2. Dirección de envío de una compra:
+2. Dirección de envío de una compra:embeber, dentro de la compra.Es pequeña.
 
-3. Etiquetas de un anuncio:
+3. Etiquetas de un anuncio:embeber, (un array) dentro del anuncio.Son pocas palabras y se muestran con el anuncio.
 
-4. Categorías (nombre, icono, atributos obligatorios):
+4. Categorías (nombre, icono, atributos obligatorios):Referenciar, en una colección categorías, por que muchos anuncios utilizan y van por categorías.
 
-5. Historial de cambios de precio:
+5. Historial de cambios de precio:embeber,dentro del anuncio(array con fecha y precio), solo cambia cada pocas veces y se trata de ese articulo.
 
-6. Los anuncios de un usuario, dentro del usuario:
+6. Los anuncios de un usuario, dentro del usuario:Referenciar, por que un usuario puede tener muchos anuncios.
 
-7. Furniro, líneas de un pedido:
+7. Furniro, líneas de un pedido:Embeber,dentro del pedido.Son parte del pedido, se leen con el pedido, solas no tendrían sentido.
 
-8. Furniro, reseñas de un producto:
+8. Furniro, reseñas de un producto:Referenciar, en una colección reseñas.Un producto popular podría tener miles y ocuparía mucho.
 
 
 //-- APARTADO 9: diferencias con mi diseño
