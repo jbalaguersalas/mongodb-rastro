@@ -41,19 +41,20 @@ Mediante anuncio_id <> ofertas <> Comprador ID
 
 2. 
 {
-comprador {
+  comprador: {
     id: ObjectId("660000000000000000000005"),
-    nombre: "Sara"
-},
-anuncio {
+    nombre: "Sara López"
+  },
+  anuncio: {
     id: ObjectId("670000000000000000000003")
-},
-importe: 340,
-estado: "PENDIENTE",
-fecha: NEW DATE()
+  },
+  importe: 340,
+  estado: "PENDIENTE",
+  fecha: new Date()
 }
-3. 
 
+3. 
+anuncio: 
 
 
 4. 
