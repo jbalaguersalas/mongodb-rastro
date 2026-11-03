@@ -31,3 +31,29 @@ Tendríamos que actualizar el nombre en colección usuarios y también en todos 
 
 4. 
 En SQL utilizábamos un JOIN para relacionar la tabla de clases con la tabla de monitores mediante el ID del monitor y así obtener su nombre. En MongoDB guardamos una referencia al usuario y una copia de su nombre dentro del anuncio
+
+//--EJERCICIO A3
+
+1. 
+Crearía una colección independiente llamada ofertas, porque un anuncio puede recibir muchas ofertas y estas pueden crecer sin límite.
+Mediante anuncio_id <> ofertas <> Comprador ID
+
+
+2. 
+{
+comprador {
+    id: ObjectId("660000000000000000000005"),
+    nombre: "Sara"
+},
+anuncio {
+    id: ObjectId("670000000000000000000003")
+},
+importe: 340,
+estado: "PENDIENTE",
+fecha: NEW DATE()
+}
+3. 
+
+
+
+4. 
