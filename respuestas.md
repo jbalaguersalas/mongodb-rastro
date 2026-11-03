@@ -67,15 +67,29 @@ No cambiaría el precio guardado en la oferta. Mantendría los 380 € porque es
 //-- EJERCICIO A4
 
 1. 
+Crearía una colección independiente llamada valoraciones, porque un usuario puede recibir muchas valoraciones y estas pueden crecer con el tiempo. Así evitamos que el documento del usuario tenga un array demasiado grande.
 
 
 2. 
-
+{
+    anuncioId: ObjectId("670000000000000000000004"),
+    autor: {
+        id: ObjectId("660000000000000000000004"),
+        nombre: "Hugo Sanz"
+    },
+    valoradoId: ObjectId("660000000000000000000003"),
+    estrellas: 5,
+    comentario: "Todo perfecto",
+    fecha: new Date()
+}
 
 3. 
+Crearía un índice único sobre autor.id y anuncioId, para evitar que un mismo usuario valore dos veces la misma compra.
 
-
-4. 
+4. valoracionMedia: 6
+    numValoraciones: 65
+    
+    Guardaría los campos valoracionMedia y numValoraciones dentro del documento del usuario. Así podemos mostrar su nota media directamente, sin tener que recorrer todas sus valoraciones cada vez.
 
 
 //-- EJERCICIO A5
