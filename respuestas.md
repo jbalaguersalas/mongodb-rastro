@@ -54,7 +54,11 @@ Mediante anuncio_id <> ofertas <> Comprador ID
 }
 
 3. 
-anuncio: 
+anuncio: {
+    id: objectId ("670000000000000000000003"),
+    titulo: "Iphone 13 128GB"
+    precio: 380
+}
 
 
 4. 
