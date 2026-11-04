@@ -138,6 +138,7 @@ En la mesa puse las medidas juntas (dimensiones: "89 x 320 cm"). El modelo las s
   fondo y alto, así se puede filtrar por cada medida.
 
 Me gusta mas el modelo del profe, ya que el mio tiene ciertos parametros que cuando vas a comparar no van a dejar.Además de añladir mas informacion por ejemplo a la mesa donde especifica bien las dimensiones ancho, fondo y alto.
+
 //-- EJERCICIO B2.3
 
 
