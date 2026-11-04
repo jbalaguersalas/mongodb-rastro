@@ -5,9 +5,16 @@
 // Ejercicio B2 — Dos anuncios nuevos (sin _id)
 // Anuncio 1: Bicicleta de montaña Orbea
 
+db.anuncios.insertOne({titulo: "Bicicleta de montaña Orbea", descripcion: "Revisada en el taller", precio: 300, categoria: "Deporte", estado: "DISPONIBLE", ciudad: "Castellón", fechaPublicacion: new Date("2026-10-27"), visitas: 0,
+    vendedor: { id: ObjectId("660000000000000000000004"), nombre: "Hugo Sanz" },
+    fotos: [ { url: "https://img.rastro.es/bici-1.jpg", orden: 1 }, ],
+    atributos: { talla: "L", tipo:"montaña", pulgadas: 29, descripcion: "pulgadas de rueda"} })
 
 // Anuncio 2: Google Pixel 7
-
+db.anuncios.insertOne({ titulo: "Google Pixel 7", descripcion: "Libre, con caja.", precio: 260, categoria: "Móviles", estado: "DISPONIBLE", ciudad: "Valencia", fechaPublicacion: new Date("2026-10-28"), visitas: 0,
+    vendedor: { id: ObjectId("660000000000000000000005"), nombre: "Sara López" },
+    fotos: [ { url: "https://img.rastro.es/pixel-1.jpg", orden: 1 }, { url: "https://img.rastro.es/pixel-2.jpg", orden: 2 } ],
+    atributos: { marca: "Google", modelo: "Pixel 7", almacenamientoGB: 128, bateriaPct: 92 } })
 
 
 // Ejercicio B3 — Índices
