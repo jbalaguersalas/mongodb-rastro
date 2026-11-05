@@ -69,7 +69,7 @@ db.anuncios.find({ categoria: "Coches", "atributos.km": { $lt: 100000 } })
 
 // 3. Móviles con 128 GB o más
 
-db.anuncios.find({ categoria: "Móviles","atributos.alamcenamientoGB": {$gte: 128}})
+db.anuncios.find({ categoria: "Móviles","atributos.almacenamientoGB": {$gte: 128}})
 // 4. Entre 50 y 400 € (ambos incluidos)
 db.anuncios.find({precio: {$gte: 50, $lte: 400}})
 
@@ -87,11 +87,11 @@ db.anuncios.find({fotos:{$size:0}})
 
 // 8. Ofertas PENDIENTE del Seat Ibiza
 
-db.anuncios.find({"anuncio.id":ObjectId("670000000000000000000001"), estado: "PENDIENTE"})
+db.ofertas.find({"anuncio.id":ObjectId("670000000000000000000001"), estado: "PENDIENTE"})
 
 // 9. Usuarios con la mesa de roble en favoritos (solo nombre)
 
-db.anuncios.find({favoritos: ObjectId("670000000000000000000008")},{nombre:1, _id: 0})
+db.usuarios.find({favoritos: ObjectId("670000000000000000000008")},{nombre:1, _id: 0})
 
 // 10. Cuántos anuncios están VENDIDO
 
@@ -104,18 +104,31 @@ db.anuncios.find({},{titulo: 1, visitas: 1, _id: 0}).sort({visitas:-1}).limit(3)
 // Ejercicio B6 — Agregaciones
 // 1. Número de anuncios por categoría, de más a menos
 
+db.anuncios.aggregate([
+  { $group: { _id: "$categoria", total: { $sum: 1 } } },
+  { $sort: { total: -1 } }
+])
 
 
 // 2. Precio medio por categoría
 
-
+db.anuncios.aggregate([
+    {$group: {_id:"$categoria", precioMedio: {$avg: "$precio"}}}
+])
 
 // 3. Número de anuncios por ciudad
 
-
+db.anuncios.aggregate([
+    { $group: {_id: "$ciudad", total: { $sum: 1}}}
+])
 
 // 4. Valor total en venta (DISPONIBLE) por vendedor.nombre  -> captura
 
+db.anuncios.aggregate([
+  { $match: { estado: "DISPONIBLE" } },
+  { $group: { _id: "$vendedor.nombre", valorEnVenta: { $sum: "$precio" } } },
+  { $sort: { valorEnVenta: -1 } }
+])
 
 
 // 5. Reto: la categoría con más visitas en total
