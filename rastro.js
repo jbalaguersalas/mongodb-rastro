@@ -19,38 +19,44 @@ db.anuncios.insertOne({ titulo: "Google Pixel 7", descripcion: "Libre, con caja.
 
 // Ejercicio B3 — Índices
 // 1. Índice único sobre email de usuarios
-
+db.usuarios.createIndex({ email: 1}, {unique:true})
 
 // 2. Índice único sobre autor.id + anuncioId de valoraciones
-
+db.valoraciones.createIndex({"autor.id": 1, anuncioId: 1},{unique:true})
 
 // 3. Índice sobre categoria y precio de anuncios
-
+db.anuncios.createIndex({categoria: 1, precio: 1,})
 
 // 4. Mostrar los índices de las tres colecciones
-
+db.usuarios.getIndexes()
+db.valoraciones.getIndexes()
+db.anuncios.getIndexes()
 
 // 5. explain() de find({ categoria: "Coches" }).sort({ precio: 1 })
 
+db.anuncios.find({ categoria: "Coches" }).sort({ precio: 1 }).explain()
 
 
 // Ejercicio B4 — Rompe la base de datos
 // B4.1
+db.usuarios.insertOne({ nombre: "Ana Copia", email: "ana@rastro.es", ciudad: "Valencia", fechaAlta: new Date(), favoritos: [], valoracionMedia: 0, numValoraciones: 0 })
 
 
 // B4.2
-
+db.valoraciones.insertOne({ anuncioId: ObjectId("670000000000000000000004"), autor: { id: ObjectId("660000000000000000000004"), nombre: "Hugo Sanz" }, valoradoId: ObjectId("660000000000000000000003"), estrellas: 1, comentario: "Cambio de opinión", fecha: new Date() })
 
 // B4.3
-
+db.anuncios.insertOne({ titulo: "Prueba fantasma", precio: 10, categoria: "Libros", estado: "DISPONIBLE", ciudad: "Valencia", fechaPublicacion: new Date(), visitas: 0, vendedor: { id: ObjectId("660000000000000000000099"), nombre: "Nadie" }, fotos: [], atributos: {} })
 
 // B4.4
-
+db.anuncios.insertOne({ titulo: "Prueba lámpara", precio: "75", categoria: "Muebles", estado: "DISPONIBLE", ciudad: "Valencia", fechaPublicacion: new Date(), visitas: 0, vendedor: { id: ObjectId("660000000000000000000001"), nombre: "Ana García" }, fotos: [], atributos: { material: "metal" } })
+db.anuncios.find({ precio: { $lt: 100 } }, { titulo: 1, precio: 1, _id: 0 })
 
 // B4.5
-
+db.anuncios.updateOne({ _id: ObjectId("670000000000000000000005") }, { precio: 80 })
 
 // B4.6
+db.anuncios.findOne({ _id: "670000000000000000000003" })
 
 
 // Borrar los anuncios de prueba

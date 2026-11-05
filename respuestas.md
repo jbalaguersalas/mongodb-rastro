@@ -148,41 +148,75 @@ Me gusta mas el modelo del profe, ya que el mio tiene ciertos parametros que cua
 
 B4.1 Usuario con el email de Ana
 - Predicción:
+Fallará por valores repetidos.
 - Resultado:
+MongoServerError: E11000 duplicate key error collection: rastro.usuarios index: email_1 dup key: { email: "ana@rastro.es" }
 - Explicación:
+MongoDB no deja guardar dos usuarios con el mismo email por el unique.
 
 B4.2 Hugo valora otra vez a Marta por el mismo anuncio
 - Predicción:
+No dejará valorar la misma compra dos veces por la misma persona.
 - Resultado:
+MongoServerError: E11000 duplicate key error collection: rastro.valoraciones index: autor.id_1_anuncioId_1 dup key: { autor.id: ObjectId('660000000000000000000004'), anuncioId: ObjectId('670000000000000000000004') }
 - Explicación:
+La misma persona no puede valorar dos veces la misma compra, lo para el índice del B3.2.
 
 B4.3 Anuncio de un vendedor que no existe
 - Predicción:
+No tengo mucha idea de lo que pasa, pero creo que se guarda sin error.
 - Resultado:
+acknowledged: true, insertedId: ObjectId('6aec96d13b7fbd70cad70bc1')
 - Explicación:
+Se guarda, pero está mal: el anuncio apunta a un usuario que no existe y si alguien pulsa en el vendedor no encontrará nada.
 
 B4.4 Precio escrito como texto
 - Predicción:
+Se guardará pero el precio en vez de number será un texto.
 - Resultado:
+Se guarda bien, pero al buscar los de menos de 100 € la lámpara no sale.
 - Explicación:
+Al ir entre comillas "75" es texto y no lo compara con números.
 
 B4.5 Cambiar el precio del Xiaomi sin operador
 - Predicción:
+Creo que dará error porque falta el $set.
 - Resultado:
+MongoInvalidArgumentError: Update document requires atomic operators
 - Explicación:
+Sin $set no te deja, y el Xiaomi sigue a 90.
 
 B4.6 Buscar el iPhone por su id como texto
 - Predicción:
+No lo va a encontrar.
 - Resultado:
+null
 - Explicación:
+El id está guardado como ObjectId y yo lo busco como texto, así que no coincide.
 
-B4.7 
+B4.7 ¿Qué pasaba en el gimnasio con un plan_id que no existe? ¿Quién lo comprueba en Rastro?
+- Predicción:
+En el gimnasio no se guardaba, aquí creo que sí.
+- Resultado:
+En el B4.3 el anuncio fantasma se guardó sin error.
+- Explicación:
+En PostgreSQL saltaba el error de la clave ajena. Aquí lo tiene que comprobar la aplicación antes de guardar el anuncio.
 
+B4.8 ¿Por qué la lámpara de 75 € no sale en la búsqueda de menos de 100 €?
+- Predicción:
+Por el precio entre comillas.
+- Resultado:
+Salen el Xiaomi, la chaqueta, las zapatillas y la Prueba fantasma, pero la lámpara no.
+- Explicación:
+"75" es texto y no un número, así que al buscar precio < 100 Mongo no lo tiene en cuenta.
 
-B4.8 
-
-
-B4.9 
+B4.9 ¿Qué tienen en común B4.3 y B4.4?
+- Predicción:
+Que los dos se guardan aunque estén mal.
+- Resultado:
+Los dos dieron acknowledged: true, sin ningún error.
+- Explicación:
+MongoDB no mira si el vendedor existe ni si el precio es un número, eso lo tenemos que controlar nosotros.
 
 
 //-- EJERCICIO B5.12
