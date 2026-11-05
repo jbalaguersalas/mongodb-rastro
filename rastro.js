@@ -58,57 +58,64 @@ db.anuncios.updateOne({ _id: ObjectId("670000000000000000000005") }, { precio: 8
 // B4.6
 db.anuncios.findOne({ _id: "670000000000000000000003" })
 
-
-// Borrar los anuncios de prueba
-
-
-
 // Ejercicio B5 — Consultas
 // 1. DISPONIBLE de Valencia, título y precio, sin _id, del más barato al más caro
+db.anuncios.find({ estado: "DISPONIBLE", ciudad: "Valencia" }, { titulo: 1, precio: 1, _id: 0 }).sort({ precio: 1 })
 
 
 // 2. Coches con menos de 100.000 km
+db.anuncios.find({ categoria: "Coches", "atributos.km": { $lt: 100000 } })
 
 
 // 3. Móviles con 128 GB o más
 
-
+db.anuncios.find({ categoria: "Móviles","atributos.alamcenamientoGB": {$gte: 128}})
 // 4. Entre 50 y 400 € (ambos incluidos)
-
+db.anuncios.find({precio: {$gte: 50, $lte: 400}})
 
 // 5. Título que contiene "nike", sin importar mayúsculas
 
+db.anuncios.find({titulo: /nike/i})
 
 // 6. Anuncios de Luis Martín por su id
 
+db.anuncios.find({"vendedor.id":ObjectId("660000000000000000000002")})
 
 // 7. Anuncios sin ninguna foto
 
+db.anuncios.find({fotos:{$size:0}})
 
 // 8. Ofertas PENDIENTE del Seat Ibiza
 
+db.anuncios.find({"anuncio.id":ObjectId("670000000000000000000001"), estado: "PENDIENTE"})
 
 // 9. Usuarios con la mesa de roble en favoritos (solo nombre)
 
+db.anuncios.find({favoritos: ObjectId("670000000000000000000008")},{nombre:1, _id: 0})
 
 // 10. Cuántos anuncios están VENDIDO
 
+db.anuncios.countDocuments({estado: "VENDIDO"})
 
 // 11. Los 3 anuncios más vistos (título y visitas)
 
-
+db.anuncios.find({},{titulo: 1, visitas: 1, _id: 0}).sort({visitas:-1}).limit(3)
 
 // Ejercicio B6 — Agregaciones
 // 1. Número de anuncios por categoría, de más a menos
 
 
+
 // 2. Precio medio por categoría
+
 
 
 // 3. Número de anuncios por ciudad
 
 
+
 // 4. Valor total en venta (DISPONIBLE) por vendedor.nombre  -> captura
+
 
 
 // 5. Reto: la categoría con más visitas en total

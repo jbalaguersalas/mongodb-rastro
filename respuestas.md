@@ -220,7 +220,13 @@ MongoDB no mira si el vendedor existe ni si el precio es un número, eso lo tene
 
 
 //-- EJERCICIO B5.12
-
+¿Qué pasa con los anuncios que no tienen atributos.km, como el iPhone? ¿Dan error?
+- Predicción:
+Creo que no da error, simplemente no salen.
+- Resultado:
+Solo sale el Seat Ibiza, sin ningún error.
+- Explicación:
+Los que no tienen km (móviles, ropa...) no cumplen el filtro y Mongo los salta.
 
 
 
