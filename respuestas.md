@@ -243,12 +243,21 @@ B7.6 (¿Qué nombre aparece en sus anuncios? ¿Dónde hay que arreglarlo?):
 
 1. 
 
+
+
 2. 
+
+
 
 3. 
 
+
+
 4. 
 
+
+
 5. 
+
 
 6. 
