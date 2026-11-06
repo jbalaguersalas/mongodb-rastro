@@ -142,17 +142,39 @@ db.anuncios.aggregate([
 // Ejercicio B7 — Modificar
 // 1. Cuarta foto al iPhone
 
+db.anuncios.updateOne(
+{ _id: ObjectId("670000000000000000000003")},
+{ $push: {fotos: { url: "https://img.rastro.es/a3-4.jpg", orden: 4}}}
+)
 
 // 2. +1 visita al Xiaomi
+
+db.anuncios.updateOne(
+    {_id: ObjectId("670000000000000000000005")},
+    { $inc: { visitas: 1}}
+)
 
 
 // 3. Sara quita el iPhone y añade el Ford Focus (dos veces)
 
 
+db.usuarios.updateOne(
+{_id: ObjectId("660000000000000000000005") },
+{$pull: {favoritos: ObjectId("670000000000000000000003")}}
+)
+
+db. usuarios.updateOne(
+    {_id: ObjectId("660000000000000000000005")},
+    {$addToSet:{favoritos: ObjectId("670000000000000000000002")}}
+)
 // 4. Luis acepta la oferta de Sara por el Seat
+
+    
 
 
 // 5. Rebajas: coches -10 %
+
+
 
 
 // 6. Luis cambia su nombre a "Luis M. Martín" (y arreglarlo donde se copió)
