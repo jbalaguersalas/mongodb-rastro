@@ -133,7 +133,11 @@ db.anuncios.aggregate([
 
 // 5. Reto: la categoría con más visitas en total
 
-
+db.anuncios.aggregate([
+{$group: {_id: "$categoría", visitasTotales: {$sum: "$visitas"}}},
+{$sort: {visitasTotales: -1}},
+{$limit:1}
+])
 
 // Ejercicio B7 — Modificar
 // 1. Cuarta foto al iPhone
