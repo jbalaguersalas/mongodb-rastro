@@ -169,13 +169,25 @@ db. usuarios.updateOne(
 )
 // 4. Luis acepta la oferta de Sara por el Seat
 
-    
+    db.ofertas.updateOne(
+        { _id: ObjectId("680000000000000000000003")},
+        {$set: {estado: "ACEPTADA"}}
+    )
+
+    db.anuncios.updateOne(
+        {_id: ObjectId("670000000000000000000001")},
+        {$set: {estado: "RESERVADO"}}
+    )
 
 
 // 5. Rebajas: coches -10 %
 
-
+db.anuncios.updateMany({categoria: "coches"},{$mul:{precio: 0.9}})
 
 
 // 6. Luis cambia su nombre a "Luis M. Martín" (y arreglarlo donde se copió)
 
+db.usuarios.updateOne(
+    {_id: ObjectId("660000000000000000000002")},
+    { $set: {nombre: "Luís M. Martín"}}
+)
