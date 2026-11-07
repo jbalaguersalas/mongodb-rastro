@@ -241,7 +241,7 @@ B7.6 (¿Qué nombre aparece en sus anuncios? ¿Dónde hay que arreglarlo?):
 
 //-- EJERCICIO B8
 
-1. 
+1.  
 
 
 

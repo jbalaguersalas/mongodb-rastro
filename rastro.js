@@ -182,12 +182,24 @@ db. usuarios.updateOne(
 
 // 5. Rebajas: coches -10 %
 
-db.anuncios.updateMany({categoria: "coches"},{$mul:{precio: 0.9}})
+db.anuncios.updateMany({categoria: "Coches"},{$mul:{precio: 0.9}})
 
 
 // 6. Luis cambia su nombre a "Luis M. Martín" (y arreglarlo donde se copió)
 
 db.usuarios.updateOne(
     {_id: ObjectId("660000000000000000000002")},
-    { $set: {nombre: "Luís M. Martín"}}
+    { $set: {nombre: "Luis M. Martín"}}
+)
+
+// Arreglar la copia en sus anuncios
+db.anuncios.updateMany(
+    {"vendedor.id": ObjectId("660000000000000000000002")},
+    { $set: {"vendedor.nombre": "Luis M. Martín"}}
+)
+
+// Arreglar la copia en sus ofertas
+db.ofertas.updateMany(
+    {"comprador.id": ObjectId("660000000000000000000002")},
+    { $set: {"comprador.nombre": "Luis M. Martín"}}
 )
