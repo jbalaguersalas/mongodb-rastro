@@ -1,182 +1,159 @@
-//--EJERCICIO A1
+//-- EJERCICIO A1
 
-1. Las columnas que tendria la tabla anuncios serían = Título, Categoría, Precio, Marca, Modelo, Año, Kilometros, combustible, almacenamiento, batería, talla, genero, material, dimensiones. (14 columnas)
+1. Si cada atributo es una columna, la tabla anuncios quedaría con estas: título, categoría, precio, marca, modelo, año, km, combustible, almacenamiento, batería, talla, género, material y dimensiones. En total me salen 14 columnas.
 
-2. La fila de la chaqueta quedaría  Título: Chaqueta vaquera, categoría: Ropa, talla:M, Marca:Levi's, genero:unisex.
+2. La fila de la chaqueta sería: título "Chaqueta vaquera", categoría "Ropa", precio 25, talla M, marca Levi's y género unisex. El resto (modelo, año, km, combustible, almacenamiento, batería, material y dimensiones) se quedarían en NULL, o sea 8 columnas vacías. Casi la mitad de la fila sin usar.
 
-Quedarían unas 9 columnas en null.
+3. Tendría que cambiar la tabla con un ALTER TABLE y añadir columnas nuevas para el tipo de bici y las pulgadas de la rueda (la talla ya estaba por la ropa). Y cada vez que saliera una categoría nueva habría que volver a tocar la tabla.
 
-3. Tendría que añadir 2 columnas mas una con el tipo de bici, y otra con las pulgadas de la rueda
+4. Harían falta 4 JOIN, uno por cada tabla de categoría (coches, móviles, ropa y muebles), para juntarlas con la tabla anuncios y sacar todos los de Valencia con sus datos. Y si mañana hay más categorías, más JOIN.
 
+5. Los documentos que escribí:
 
-4. Harían falta 4 JOIN, uno para unir la tabla anuncios con cada una de las tablas de categorías (coches, móviles, ropa y muebles). Así podríamos obtener todos los anuncios de Valencia junto con sus datos específicos.
+{ titulo: "iPhone 13", categoria: "Móviles", precio: 380,
+  atributos: { marca: "Apple", modelo: "iPhone 13", almacenamiento: "128GB", bateria: "87%" } }
 
-5. titulo: "IPhone 13", categoria: "Moviles", precio: 350,
-    atributos: {marca: "Apple", modelo: "Iphone13", alamcenamiento: "128GB", batería: 87%}
-
-    título: "Mesa", categoria: "Muebles", precio: 234,
-        atributos: {material: "roble", dimensiones: 89 x 320 cm}
-
-//--EJERCICIO A2
-
-1. 
-No es necesario guardar toda la información del usuario dentro de cada anuncio, porque un mismo usuario puede publicar muchos anuncios y estaríamos duplicando sus datos.
-Además si el ususario, cambia alguno de sus datos como el email o la ciudad tendriamos que cambiar los datos en todos los anuncios.
-
-2. 
-Copiamos el nombre del vendedor mediante el id para poder ir a su perfil y ahi aparecen los datos que necesitamos, aplica la misma logica anterior si el ususario cambia su ciudad o su email nos quedaríamos con una version antigua y que no es actualmente lo que tiene esa persona, en definitiva copiando su usuario tenemos su perfil con toda su informacion relevante sin depender de su ciudad o email.
-
-3. 
-Tendríamos que actualizar el nombre en colección usuarios y también en todos los anuncios donde aparezca como vendedor.
-
-4. 
-En SQL utilizábamos un JOIN para relacionar la tabla de clases con la tabla de monitores mediante el ID del monitor y así obtener su nombre. En MongoDB guardamos una referencia al usuario y una copia de su nombre dentro del anuncio
-
-//--EJERCICIO A3
-
-1. 
-Crearía una colección independiente llamada ofertas, porque un anuncio puede recibir muchas ofertas y estas pueden crecer sin límite.
-Mediante anuncio_id <> ofertas <> Comprador ID
+{ titulo: "Mesa de comedor", categoria: "Muebles", precio: 120,
+  atributos: { material: "roble", dimensiones: "160 x 90 x 75 cm" } }
 
 
-2. 
+//-- EJERCICIO A2
+
+1. Por dos cosas. La primera, que un usuario puede tener muchos anuncios y estaríamos repitiendo todos sus datos en cada uno. La segunda, que si cambia algo como el email o la ciudad, habría que ir cambiándolo en todos sus anuncios uno por uno.
+
+2. Copiamos el nombre porque es lo único que se ve en la ficha ("Vendido por Luis Martín") y casi nunca cambia. El email o la ciudad no hacen falta para pintar la ficha y pueden cambiar más, así que si los copiáramos nos quedaríamos con datos viejos. Si alguien quiere ver más, con el id se va al perfil.
+
+3. Hay que cambiarlo en su documento de la colección usuarios y también en todos los anuncios donde sale como vendedor (vendedor.nombre). Y si ha hecho ofertas, también en esas ofertas.
+
+4. En el gimnasio se hacía con un JOIN entre la tabla clases y la de monitores usando el id del monitor. Aquí no hace falta el JOIN, porque el anuncio ya lleva el id del vendedor y una copia de su nombre. Se gana velocidad, pero hay que acordarse de actualizar la copia.
+
+
+//-- EJERCICIO A3
+
+1. Las pondría en una colección aparte, ofertas. Un anuncio popular puede recibir muchas ofertas y la lista no para de crecer. Además, el comprador quiere ver "mis ofertas" sin tener que abrir anuncio por anuncio. Cada oferta guarda el id del anuncio y el id del comprador.
+
+2.
 {
-  comprador: {
-    id: ObjectId("660000000000000000000005"),
-    nombre: "Sara López"
-  },
-  anuncio: {
-    id: ObjectId("670000000000000000000003")
-  },
   importe: 340,
   estado: "PENDIENTE",
-  fecha: new Date()
+  fecha: new Date(),
+  anuncio: { id: ObjectId("670000000000000000000003") },
+  comprador: { id: ObjectId("660000000000000000000005"), nombre: "Sara López" }
 }
 
-3. 
+3. Dentro de la oferta copiaría el título y el precio del anuncio:
+
 anuncio: {
-    id: objectId ("670000000000000000000003"),
-    titulo: "Iphone 13 128GB"
-    precio: 380
+  id: ObjectId("670000000000000000000003"),
+  titulo: "iPhone 13 128 GB",
+  precio: 380
 }
 
+4. No, yo lo dejaría en 380 €. Es el precio que tenía el anuncio cuando Sara hizo la oferta, igual que en Furniro el precio de la línea de pedido se queda como estaba el día de la compra aunque luego cambie el producto. Si lo cambiáramos perderíamos el historial.
 
-4. 
-No cambiaría el precio guardado en la oferta. Mantendría los 380 € porque es el precio que tenía el anuncio cuando Sara realizó su oferta. Si Ana baja después el precio a 350 €, la oferta debe conservar el precio original para mantener el historial.
 
 //-- EJERCICIO A4
 
-1. 
-Crearía una colección independiente llamada valoraciones, porque un usuario puede recibir muchas valoraciones y estas pueden crecer con el tiempo. Así evitamos que el documento del usuario tenga un array demasiado grande.
+1. Colección aparte, valoraciones. Un usuario que vende mucho puede acabar con cientos de valoraciones y no quiero que su documento se haga enorme. Además así se pueden buscar las valoraciones por anuncio o por autor.
 
-
-2. 
+2.
 {
-    anuncioId: ObjectId("670000000000000000000004"),
-    autor: {
-        id: ObjectId("660000000000000000000004"),
-        nombre: "Hugo Sanz"
-    },
-    valoradoId: ObjectId("660000000000000000000003"),
-    estrellas: 5,
-    comentario: "Todo perfecto",
-    fecha: new Date()
+  anuncioId: ObjectId("670000000000000000000004"),
+  autor: { id: ObjectId("660000000000000000000004"), nombre: "Hugo Sanz" },
+  valoradoId: ObjectId("660000000000000000000003"),
+  estrellas: 5,
+  comentario: "Todo perfecto",
+  fecha: new Date()
 }
 
-3. 
-Crearía un índice único sobre autor.id y anuncioId, para evitar que un mismo usuario valore dos veces la misma compra.
+3. Sobre autor.id y anuncioId juntos. Así la misma persona no puede valorar dos veces la misma compra.
 
-4. valoracionMedia: 6
-    numValoraciones: 65
-    
-    Guardaría los campos valoracionMedia y numValoraciones dentro del documento del usuario. Así podemos mostrar su nota media directamente, sin tener que recorrer todas sus valoraciones cada vez.
+4. Guardaría valoracionMedia y numValoraciones dentro del usuario, por ejemplo valoracionMedia: 4.6 y numValoraciones: 65. Así el perfil enseña la nota al momento sin tener que recorrer todas las valoraciones. Y con numValoraciones puedo recalcular la media cuando llega una nueva.
 
 
 //-- EJERCICIO A5
 
-1. Un usuario normal podrá tener decenas, como mucho algún centenar, pero un anuncio popular lo tendran en favoritos miles de usuarios.
+1. Un usuario normal tendrá pocos favoritos, unas decenas como mucho. En cambio un anuncio muy popular lo pueden tener en favoritos miles de usuarios.
 
+2. Descarto la opción b). Si guardo la lista de usuarios dentro del anuncio, en uno popular ese array crecería sin parar y el documento se haría enorme (hay un límite de 16 MB). Encima es la ficha que más se abre, así que cargaríamos miles de ids para nada.
 
-2. Se descarta la opción b, porque ese array crece sin limite en un anuncio popular, y ocuparia más de la cuenta.
+3. La opción a). Con leer solo el documento del usuario ya tengo su lista de favoritos, no hace falta mirar en ningún otro sitio.
 
-
-3. La lista de favoritos del usuario, no hace falta consultar ningun sitio más.
-
-
-4. Buscamos en la colección usuarios los que tienen ese anuncio en su lista de favoritos, y los contamos:
+4. Buscaría en la colección usuarios los que tienen ese anuncio dentro de su array de favoritos y los contaría:
 db.usuarios.countDocuments({ favoritos: ObjectId("670000000000000000000008") })
 
-
-5. $addToSet, porque solo añade el anuncio si no está ya en la lista. Con $push se repetiría si el usuario pulsa dos veces.
+5. $addToSet. Solo añade el anuncio si no está ya en la lista. Con $push, si el usuario le da dos veces al corazón, se guardaría repetido.
 
 
 //-- EJERCICIO A6
 
-1. Mensajes de chat: Referenciar (ej:mensajes).Pueden ser muchisimos y no paran.
+1. Mensajes de chat: referenciar, en una colección mensajes. Una conversación puede tener muchísimos mensajes y no para de crecer.
 
-2. Dirección de envío de una compra:embeber, dentro de la compra.Es pequeña.
+2. Dirección de envío de una compra: embeber, dentro de la compra. Es pequeña y tiene que quedarse como estaba el día de la compra aunque el usuario se mude.
 
-3. Etiquetas de un anuncio:embeber, (un array) dentro del anuncio.Son pocas palabras y se muestran con el anuncio.
+3. Etiquetas de un anuncio: embeber, como un array dentro del anuncio. Son cuatro palabras y siempre se enseñan con el anuncio.
 
-4. Categorías (nombre, icono, atributos obligatorios):Referenciar, en una colección categorías, por que muchos anuncios utilizan y van por categorías.
+4. Categorías (nombre, icono, atributos obligatorios): referenciar, en una colección categorias. Muchos anuncios comparten la misma categoría, así que mejor guardarla una vez y no repetir el icono en cada anuncio.
 
-5. Historial de cambios de precio:embeber,dentro del anuncio(array con fecha y precio), solo cambia cada pocas veces y se trata de ese articulo.
+5. Historial de cambios de precio: embeber, dentro del anuncio (array con fecha y precio). Un anuncio cambia de precio pocas veces y ese historial solo tiene sentido con ese anuncio.
 
-6. Los anuncios de un usuario, dentro del usuario:Referenciar, por que un usuario puede tener muchos anuncios.
+6. Los anuncios de un usuario, dentro del usuario: referenciar. Un usuario puede tener muchos anuncios y cada anuncio se abre por separado, así que mejor que sea el anuncio el que guarde el id del vendedor.
 
-7. Furniro, líneas de un pedido:Embeber,dentro del pedido.Son parte del pedido, se leen con el pedido, solas no tendrían sentido.
+7. Furniro, líneas de un pedido: embeber, dentro del pedido. Son parte del pedido, se leen siempre con él y solas no tienen sentido.
 
-8. Furniro, reseñas de un producto:Referenciar, en una colección reseñas.Un producto popular podría tener miles y ocuparía mucho.
+8. Furniro, reseñas de un producto: referenciar, en una colección reseñas. Un producto que se vende mucho puede tener miles de reseñas.
 
 
 //-- APARTADO 9: diferencias con mi diseño
-Diferencias:
-- En el iPhone guardé el almacenamiento y la batería como texto ("128GB", "87%"). El modelo usa
-  números (almacenamientoGB: 128, bateriaPct: 87), que es mejor porque así se puede buscar con
-  mayor que / menor que.
-En la mesa puse las medidas juntas (dimensiones: "89 x 320 cm"). El modelo las separa en ancho,
-  fondo y alto, así se puede filtrar por cada medida.
 
-Me gusta mas el modelo del profe, ya que el mio tiene ciertos parametros que cuando vas a comparar no van a dejar.Además de añladir mas informacion por ejemplo a la mesa donde especifica bien las dimensiones ancho, fondo y alto.
+En general mi diseño se parece bastante al del modelo: fotos dentro del anuncio, vendedor con id y nombre, ofertas y valoraciones en colecciones aparte y favoritos como array en el usuario.
+
+Las diferencias que he visto están en los atributos del A1:
+- En el iPhone puse el almacenamiento y la batería como texto ("128GB", "87%"). El modelo los pone como números (almacenamientoGB: 128, bateriaPct: 87). Es mejor así, porque con texto no puedes buscar "móviles de 128 GB o más".
+- En la mesa puse las medidas todas juntas en un texto ("160 x 90 x 75 cm"). El modelo las separa en ancho, fondo y alto, y así se puede filtrar por cada medida.
+
+Me quedo con el modelo del profe, porque el mío no deja comparar bien esos datos.
+
 
 //-- EJERCICIO B2.3
 
-
+No tuve que cambiar nada. Inserté la bici con la categoría "Deporte" y sus propios atributos (talla, tipo y pulgadas) y MongoDB la guardó sin quejarse.
+En PostgreSQL primero habría tenido que modificar la tabla (ALTER TABLE para añadir columnas o crear una tabla nueva para deporte). Si no, el INSERT habría dado error.
 
 
 //-- EJERCICIO B4
 
 B4.1 Usuario con el email de Ana
 - Predicción:
-Fallará por valores repetidos.
+Creo que va a fallar porque el email ya existe y hemos puesto un índice único.
 - Resultado:
 MongoServerError: E11000 duplicate key error collection: rastro.usuarios index: email_1 dup key: { email: "ana@rastro.es" }
 - Explicación:
-MongoDB no deja guardar dos usuarios con el mismo email por el unique.
+Lo ha parado el índice único del email que creé en el B3. No deja meter dos usuarios con el mismo email.
 
 B4.2 Hugo valora otra vez a Marta por el mismo anuncio
 - Predicción:
-No dejará valorar la misma compra dos veces por la misma persona.
+No le va a dejar, porque ya la valoró por esa compra.
 - Resultado:
 MongoServerError: E11000 duplicate key error collection: rastro.valoraciones index: autor.id_1_anuncioId_1 dup key: { autor.id: ObjectId('660000000000000000000004'), anuncioId: ObjectId('670000000000000000000004') }
 - Explicación:
-La misma persona no puede valorar dos veces la misma compra, lo para el índice del B3.2.
+Lo ha frenado el índice único de autor.id + anuncioId del B3.2. La misma persona no puede valorar dos veces la misma compra.
 
 B4.3 Anuncio de un vendedor que no existe
 - Predicción:
-No tengo mucha idea de lo que pasa, pero creo que se guarda sin error.
+No lo tenía muy claro, pero creo que se guarda sin error porque Mongo no tiene claves ajenas.
 - Resultado:
 acknowledged: true, insertedId: ObjectId('6aec96d13b7fbd70cad70bc1')
 - Explicación:
-Se guarda, pero está mal: el anuncio apunta a un usuario que no existe y si alguien pulsa en el vendedor no encontrará nada.
+Se guarda, pero es un problema: el anuncio apunta a un usuario que no existe, y si alguien pulsa en el vendedor no va a encontrar nada.
 
 B4.4 Precio escrito como texto
 - Predicción:
-Se guardará pero el precio en vez de number será un texto.
+Se va a guardar, pero el precio será un texto en vez de un número.
 - Resultado:
-Se guarda bien, pero al buscar los de menos de 100 € la lámpara no sale.
+Se guarda sin error, pero al buscar los anuncios de menos de 100 € la lámpara no aparece.
 - Explicación:
-Al ir entre comillas "75" es texto y no lo compara con números.
+Como "75" va entre comillas es texto, y Mongo no lo compara con números. Sí es un problema, porque el anuncio no sale en las búsquedas por precio.
 
 B4.5 Cambiar el precio del Xiaomi sin operador
 - Predicción:
@@ -184,7 +161,7 @@ Creo que dará error porque falta el $set.
 - Resultado:
 MongoInvalidArgumentError: Update document requires atomic operators
 - Explicación:
-Sin $set no te deja, y el Xiaomi sigue a 90.
+Sin un operador como $set no te deja hacer el update, así que el Xiaomi sigue costando 90.
 
 B4.6 Buscar el iPhone por su id como texto
 - Predicción:
@@ -192,72 +169,52 @@ No lo va a encontrar.
 - Resultado:
 null
 - Explicación:
-El id está guardado como ObjectId y yo lo busco como texto, así que no coincide.
+El _id está guardado como ObjectId y yo lo busco como texto normal, así que no coincide. Hay que poner ObjectId("...").
 
-B4.7 ¿Qué pasaba en el gimnasio con un plan_id que no existe? ¿Quién lo comprueba en Rastro?
-- Predicción:
-En el gimnasio no se guardaba, aquí creo que sí.
-- Resultado:
-En el B4.3 el anuncio fantasma se guardó sin error.
-- Explicación:
-En PostgreSQL saltaba el error de la clave ajena. Aquí lo tiene que comprobar la aplicación antes de guardar el anuncio.
+B4.7
+En el gimnasio, con PostgreSQL, un plan_id que no existía daba error por la clave ajena y no se guardaba. Aquí, en el B4.3, el anuncio fantasma se guardó sin problema. En Rastro lo tiene que comprobar la aplicación (el código del programa) antes de guardar el anuncio.
 
-B4.8 ¿Por qué la lámpara de 75 € no sale en la búsqueda de menos de 100 €?
-- Predicción:
-Por el precio entre comillas.
-- Resultado:
-Salen el Xiaomi, la chaqueta, las zapatillas y la Prueba fantasma, pero la lámpara no.
-- Explicación:
-"75" es texto y no un número, así que al buscar precio < 100 Mongo no lo tiene en cuenta.
+B4.8
+Porque el precio de la lámpara es "75" entre comillas, o sea texto, y no un número. Al buscar precio < 100 Mongo solo compara con números, así que la lámpara no entra. En la búsqueda salieron el Xiaomi, la chaqueta, las zapatillas y la Prueba fantasma, pero la lámpara no.
 
-B4.9 ¿Qué tienen en común B4.3 y B4.4?
-- Predicción:
-Que los dos se guardan aunque estén mal.
-- Resultado:
-Los dos dieron acknowledged: true, sin ningún error.
-- Explicación:
-MongoDB no mira si el vendedor existe ni si el precio es un número, eso lo tenemos que controlar nosotros.
+B4.9
+Que los dos se guardaron aunque estaban mal (los dos dieron acknowledged: true). MongoDB no comprueba si el vendedor existe ni si el precio es un número; eso lo tenemos que controlar nosotros.
 
 
 //-- EJERCICIO B5.12
-¿Qué pasa con los anuncios que no tienen atributos.km, como el iPhone? ¿Dan error?
-- Predicción:
-Creo que no da error, simplemente no salen.
-- Resultado:
-Solo sale el Seat Ibiza, sin ningún error.
-- Explicación:
-Los que no tienen km (móviles, ropa...) no cumplen el filtro y Mongo los salta.
 
+No dan error, simplemente no salen. Al buscar por atributos.km solo me salió el Seat Ibiza. Los anuncios que no tienen ese campo (móviles, ropa, muebles...) no cumplen el filtro y Mongo se los salta sin decir nada.
 
 
 //-- EJERCICIO B7 (preguntas)
 
 B7.3 (¿Se ha duplicado el Ford Focus?):
 
+No. Como usé $addToSet, la segunda vez no hizo nada porque el Ford Focus ya estaba en la lista (salió modifiedCount: 0).
+
 B7.4 (¿Cuántas instrucciones? ¿Y si se corta la luz?):
 
+Me han hecho falta 2 instrucciones: una para poner la oferta en ACEPTADA y otra para poner el Seat en RESERVADO.
+Si se va la luz justo entre las dos, la oferta queda aceptada pero el Seat sigue DISPONIBLE. Los datos no cuadran y otra persona podría intentar comprar el coche.
+
 B7.6 (¿Qué nombre aparece en sus anuncios? ¿Dónde hay que arreglarlo?):
+
+En sus anuncios seguía saliendo "Luis Martín", el nombre viejo, porque era una copia y no se cambia sola.
+Lo he tenido que arreglar en anuncios (vendedor.nombre) y en ofertas (comprador.nombre), porque Luis también había hecho una oferta por las zapatillas.
 
 
 //-- EJERCICIO B8
 
-1.  
+1. Porque cada categoría tiene atributos distintos y puedo meter categorías nuevas (como Deporte) sin tocar nada. Y porque la ficha del anuncio la saco de una vez en un solo documento, sin hacer JOIN.
 
+2. Los pagos, las facturas y los saldos. Ahí los datos siempre tienen la misma forma, están muy relacionados y no puede colarse ni un error, y eso SQL lo controla mejor.
 
+3. Las fotos son pocas (máximo 10), son del anuncio y siempre se ven con él. Las ofertas pueden ser muchas, el comprador las quiere ver por su cuenta en "mis ofertas" y tienen vida propia, así que van aparte.
 
-2. 
+4. Para saber cuánto pedían en el momento en que se hizo la oferta. Si luego el vendedor cambia el precio, la oferta tiene que seguir mostrando el precio de ese día.
 
+5. Desnormalizar es copiar un dato de un documento a otro, como el nombre del vendedor dentro del anuncio.
+Ventaja: la ficha enseña el nombre sin hacer otra consulta.
+Inconveniente: cuando Luis cambió su nombre tuve que actualizarlo también en anuncios y en ofertas.
 
-
-3. 
-
-
-
-4. 
-
-
-
-5. 
-
-
-6. 
+6. La aplicación, o sea, nosotros con nuestro código. MongoDB no mira si el id existe, como se vio en el B4.3 con el vendedor fantasma.
