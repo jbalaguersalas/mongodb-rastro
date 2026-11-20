@@ -33,16 +33,6 @@ docker compose up -d
 
 Arranca MongoDB en el puerto 27017 con el usuario `admin`. Me conecto con mongosh o con la extensión de VS Code y voy lanzando las consultas de `rastro.js` sobre la base de datos `rastro`. Ojo: los datos de partida (usuarios, anuncios, ofertas y valoraciones) no están en este repo. Hay que tenerlos cargados antes.
 
-## He aprendido
-
-**Que MongoDB guarda casi todo.** Un anuncio de un vendedor que no existe se guardó sin problema. En el gimnasio, PostgreSQL lo habría parado por la clave ajena. Aquí lo tiene que comprobar mi código.
-
-**Que un número entre comillas es texto.** Guardé una lámpara con precio `"75"` y luego no salía al buscar anuncios de menos de 100 €.
-
-**Que copiar datos tiene un precio.** Guardo el nombre del vendedor dentro de cada anuncio para no tener que buscarlo aparte. Cuando Luis cambió su nombre, tuve que arreglarlo en sus anuncios y en sus ofertas.
-
-**Cuándo embeber y cuándo referenciar.** Las fotos van dentro del anuncio porque son pocas y siempre se ven con él. Las ofertas van en su propia colección porque pueden ser muchas y el comprador las quiere ver todas juntas en "mis ofertas".
-
 ## Con qué lo he hecho
 
 - **MongoDB 8**: la base de datos.
